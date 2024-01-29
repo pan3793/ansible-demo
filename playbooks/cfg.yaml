@@ -1,13 +1,8 @@
 # usage:
 #   ansible-playbook playbooks/cfg.yaml -t bin
-#   ansible-playbook playbooks/cfg.yaml -t git
-#   ansible-playbook playbooks/cfg.yaml -t gpg
-#   ansible-playbook playbooks/cfg.yaml -t gradle
-#   ansible-playbook playbooks/cfg.yaml -t maven
 #   ansible-playbook playbooks/cfg.yaml -t npm
 #   ansible-playbook playbooks/cfg.yaml -t pip
 #   ansible-playbook playbooks/cfg.yaml -t ssh
-#   ansible-playbook playbooks/cfg.yaml -t zsh
 ##
 ---
 - hosts: local
@@ -19,34 +14,6 @@
         apply:
           tags: bin
       tags: bin
-
-    - include_role:
-        name: "../roles/cfg"
-        tasks_from: git
-        apply:
-          tags: git
-      tags: git
-
-    - include_role:
-        name: "../roles/cfg"
-        tasks_from: gradle
-        apply:
-          tags: gradle
-      tags: gradle
-
-    - include_role:
-        name: "../roles/cfg"
-        tasks_from: gpg
-        apply:
-          tags: gpg
-      tags: gpg
-
-    - include_role:
-        name: "../roles/cfg"
-        tasks_from: maven
-        apply:
-          tags: maven
-      tags: maven
 
     - include_role:
         name: "../roles/cfg"
@@ -68,11 +35,3 @@
         apply:
           tags: ssh
       tags: ssh
-
-    - include_role:
-        name: "../roles/cfg"
-        tasks_from: zsh
-        apply:
-          tags: zsh
-      tags: zsh
-
