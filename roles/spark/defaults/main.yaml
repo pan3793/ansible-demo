@@ -1,0 +1,35 @@
+spark_home: "{{ app_home }}/spark"
+spark_name: "spark-{{ spark_version }}-bin-hadoop3"
+spark_tgz_file: "{{ spark_name }}.tgz"
+spark_tgz_url: "{{ apache_mirror }}/spark/spark-{{ spark_version }}/{{ spark_tgz_file }}"
+
+spark_ext_jars:
+  # http:
+  #   - artifact: jindofs-sdk
+  #     version: 3.6.0
+  #     url_folder: https://smartdata-binary.oss-cn-shanghai.aliyuncs.com/
+  maven:
+    - group: com.mysql
+      artifact: mysql-connector-j
+      version: 8.0.33
+      repo: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
+    - group: org.apache.iceberg
+      artifact: iceberg-spark-runtime-3.4_2.12
+      version: 1.4.2
+      repo: https://maven.aliyun.com/repository/central/
+    - group: com.github.housepower
+      artifact: clickhouse-spark-runtime-3.4_2.12
+      version: 0.7.2
+      repo: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
+    - group: org.apache.kyuubi
+      artifact: kyuubi-extension-spark-3-4_2.12
+      version: "{{ kyuubi_version }}"
+      repo: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
+    - group: org.apache.kyuubi
+      artifact: kyuubi-spark-connector-tpcds_2.12
+      version: "{{ kyuubi_version }}"
+      repo: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/
+    - group: org.apache.kyuubi
+      artifact: kyuubi-spark-connector-tpch_2.12
+      version: "{{ kyuubi_version }}"
+      repo: https://mirrors.cloud.tencent.com/nexus/repository/maven-public/

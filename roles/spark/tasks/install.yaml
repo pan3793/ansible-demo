@@ -1,0 +1,26 @@
+- name: untar
+  unarchive:
+    src: "{{ download_home }}/{{ spark_tgz_file }}"
+    dest: "{{ app_home }}"
+
+- name: fix permissions, see ansible#35426
+  file:
+    path: "{{ app_home }}/{{ spark_name }}"
+    recurse: yes
+
+- name: update soft link
+  file:
+    src: "{{ app_home }}/{{ spark_name }}"
+    dest: "{{ spark_home }}"
+    state: link
+
+- name: create dirs
+  file:
+    path: '{{ item }}'
+    state: directory
+    mode: '0755'
+  with_items:
+    - '{{ spark_home }}/ext_jars'
+    - '{{ home }}/spark-metastore'
+    - '{{ home }}/spark-warehouse'
+    - '{{ home }}/iceberg-warehouse'

@@ -1,0 +1,8 @@
+- name: download kyuubi tgz
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    force: yes
+  with_items:
+    - url: "{{ kyuubi_tgz_url }}"
+      dest: "{{ download_home }}/{{ kyuubi_tgz_file }}"

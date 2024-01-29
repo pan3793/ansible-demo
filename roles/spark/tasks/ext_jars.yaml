@@ -1,0 +1,41 @@
+- name: create ext_jars dir
+  file:
+    path: "{{ spark_home }}/ext_jars"
+    state: directory
+
+# - name: download extra jars from http server
+#   get_url:
+#     url: "{{ item.url_folder }}{{ item.artifact }}-{{ item.version }}.jar"
+#     dest: "{{ spark_home }}/ext_jars/"
+#     force: yes
+#   with_items: "{{ spark_ext_jars.http }}"
+
+- name: download extra jars from maven repo
+  maven_artifact:
+    group_id: "{{ item.group }}"
+    artifact_id: "{{ item.artifact }}"
+    version: "{{ item.version }}"
+    repository_url: "{{ item.repo }}"
+    keep_name: yes
+    dest: "{{ spark_home }}/ext_jars/"
+  with_items: "{{ spark_ext_jars.maven }}"
+
+- name: find previous extra jars soft links
+  find:
+    paths: "{{ spark_home }}/jars/"
+    file_type: link
+  register: soft_links_to_delete
+
+- name: delete previous extra jars soft links
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ soft_links_to_delete.files }}"
+
+- name: create soft links for extra jars
+  file:
+    src: "{{ spark_home }}/ext_jars/{{ item.artifact }}-{{ item.version }}.jar"
+    dest: "{{ spark_home }}/jars/{{ item.artifact }}-{{ item.version }}.jar"
+    state: link
+  # with_items: "{{ spark_ext_jars.http | union(spark_ext_jars.maven) }}"
+  with_items: "{{ spark_ext_jars.maven }}"

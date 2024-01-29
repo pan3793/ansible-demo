@@ -1,0 +1,36 @@
+# usage:
+#   ansible-playbook playbooks/kyuubi.yaml -t download
+#   ansible-playbook playbooks/kyuubi.yaml -t install
+#   ansible-playbook playbooks/kyuubi.yaml -t reconfig
+##
+---
+- hosts: local
+
+  pre_tasks:
+    - name: create app_home
+      file:
+        path: "{{ app_home }}"
+        state: directory
+      tags: always
+
+  tasks:
+    - include_role:
+        name: "../../roles/kyuubi"
+        tasks_from: download
+        apply:
+          tags: download
+      tags: download
+    
+    - include_role:
+        name: "../../roles/kyuubi"
+        tasks_from: install
+        apply:
+          tags: install
+      tags: install
+    
+    - include_role:
+        name: "../../roles/kyuubi"
+        tasks_from: reconfig
+        apply:
+          tags: reconfig
+      tags: reconfig

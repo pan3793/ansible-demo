@@ -1,0 +1,8 @@
+- name: download spark tgz
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    force: yes
+  with_items:
+    - url: "{{ spark_tgz_url }}"
+      dest: "{{ download_home }}/{{ spark_tgz_file }}"

@@ -1,0 +1,44 @@
+# usage:
+#   ansible-playbook playbooks/spark.yaml -t download
+#   ansible-playbook playbooks/spark.yaml -t install
+#   ansible-playbook playbooks/spark.yaml -t ext_jars
+#   ansible-playbook playbooks/spark.yaml -t reconfig
+##
+---
+- hosts: local
+
+  pre_tasks:
+    - name: create app_home
+      file:
+        path: "{{ app_home }}"
+        state: directory
+      tags: always
+
+  tasks:
+    - include_role:
+        name: "../../roles/spark"
+        tasks_from: download
+        apply:
+          tags: download
+      tags: download
+    
+    - include_role:
+        name: "../../roles/spark"
+        tasks_from: install
+        apply:
+          tags: install
+      tags: install
+    
+    - include_role:
+        name: "../../roles/spark"
+        tasks_from: ext_jars
+        apply:
+          tags: ext_jars
+      tags: ext_jars
+    
+    - include_role:
+        name: "../../roles/spark"
+        tasks_from: reconfig
+        apply:
+          tags: reconfig
+      tags: reconfig

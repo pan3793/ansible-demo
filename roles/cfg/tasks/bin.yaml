@@ -1,0 +1,16 @@
+- file:
+    path: "{{ home }}/bin"
+    state: directory
+    mode: 0755
+
+- copy:
+    src: "bin/{{ item.file }}"
+    dest: "{{ home }}/bin/{{ item.file }}"
+    mode: "{{ item.mode }}"
+    force: yes
+  with_items:
+    - { file: "apache-clone", mode: "755" }
+    - { file: "apache-incubating-clone", mode: "755" }
+    - { file: "github-clone", mode: "755" }
+    - { file: "ne-get", mode: "755" }
+    - { file: "ne-put", mode: "755" }

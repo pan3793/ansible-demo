@@ -1,0 +1,7 @@
+- name: reconfig
+  copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+  with_items:
+    - src: spark-defaults.conf
+      dest: '{{ spark_home }}/conf/spark-defaults.conf'

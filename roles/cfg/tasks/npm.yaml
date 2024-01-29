@@ -1,0 +1,7 @@
+- copy:
+    src: "{{ item }}"
+    dest: "{{ home }}/{{ item }}"
+    mode: 0644
+    force: yes
+  with_items:
+    - ".npmrc"

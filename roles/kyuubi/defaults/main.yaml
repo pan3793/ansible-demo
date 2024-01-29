@@ -1,0 +1,4 @@
+kyuubi_home: "{{ app_home }}/kyuubi"
+kyuubi_name: "apache-kyuubi-{{ kyuubi_version }}-bin"
+kyuubi_tgz_file: "{{ kyuubi_name }}.tgz"
+kyuubi_tgz_url: "{{ apache_mirror }}/kyuubi/kyuubi-{{ kyuubi_version }}/{{ kyuubi_tgz_file }}"

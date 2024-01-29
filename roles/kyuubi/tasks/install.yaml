@@ -1,0 +1,16 @@
+- name: untar
+  unarchive:
+    src: "{{ download_home }}/{{ kyuubi_tgz_file }}"
+    dest: "{{ app_home }}"
+
+# brew install gnu-tar
+- name: fix permissions, see ansible#35426
+  file:
+    path: "{{ app_home }}/{{ kyuubi_name }}"
+    recurse: yes
+
+- name: update soft link
+  file:
+    src: "{{ app_home }}/{{ kyuubi_name }}"
+    dest: "{{ kyuubi_home }}"
+    state: link
